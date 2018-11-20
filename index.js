@@ -20,6 +20,50 @@ const connection = mysql.createConnection({
 
 // Put all API endpoints under '/api'
 // Put all API endpoints under '/api'
+
+/**
+ * Get all tables
+ */
+app.get('/beers/getAll', (req, res) => {
+    const sql = `select * from beers`;
+    connection.query(sql, function (error, results, fields) {
+        if (error) throw error;
+        else res.send(results);
+    });
+});
+
+app.get('/drinkers/getAll', (req, res) => {
+    const sql = `select * from drinkers`;
+    connection.query(sql, function (error, results, fields) {
+        if (error) throw error;
+        else res.send(results);
+    });
+});
+
+app.get('/bars/getAll', (req, res) => {
+    const sql = `select * from bars`;
+    connection.query(sql, function (error, results, fields) {
+        if (error) throw error;
+        else res.send(results);
+    });
+});
+
+app.get('/bartenders/getAll', (req, res) => {
+    const sql = `select * from bartenders`;
+    connection.query(sql, function (error, results, fields) {
+        if (error) throw error;
+        else res.send(results);
+    });
+});
+
+app.get('/manufacturers/getAll', (req, res) => {
+    const sql = `select distinct manf from beers`;
+    connection.query(sql, function (error, results, fields) {
+        if (error) throw error;
+        else res.send(results);
+    });
+});
+
 /**
  * Get all the data
  * **/
@@ -121,16 +165,18 @@ connection.query(sql, function (error, results, fields) {
 });
 });
 
+
+
 /**
  * Given a beer – show bars where this beer sells the most
  * **/
 app.get('/beer/:beerName/bars', (req, res) => {
     const beerName = req.params.beerName;
-const sql = `select t.bar, SUM(quantity) as amount from transactions t, buys b where t.ID = b.transID and b.item = '${beerName}' GROUP BY t.bar ORDER BY amount desc LIMIT 10;`;
-connection.query(sql, function (error, results, fields) {
-    if (error) throw error;
-    else res.send(results);
-});
+    const sql = `select t.bar, SUM(quantity) as amount from transactions t, buys b where t.ID = b.transID and b.item = '${beerName}' GROUP BY t.bar ORDER BY amount desc LIMIT 10;`;
+    connection.query(sql, function (error, results, fields) {
+        if (error) throw error;
+        else res.send(results);
+    });
 });
 
 /**
