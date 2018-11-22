@@ -260,31 +260,6 @@ connection.query(sql, function (error, results, fields) {
 });
 });
 
-app.get('/manufacturer/:manufacturerName', (req, res) => {
-    console.log(req.params.manufacturerName);
-const locations = [
-    "Toledo-Ohio",
-    "Tulsa-Oklahoma",
-    "Arlington-Virginia",
-    "Dallas-Texas",
-    "Mesa-Arizona",
-    "Nashville Davidson-Tennessee",
-    "Hialeah-Florida",
-    "Cleveland-Ohio"
-];
-
-res.send(locations);
-});
-
-app.get('/test', (req, res) => {
-    connection.query('select * from drinkers d, frequents f where d.name = f.drinker limit 10', function (error, results, fields) {
-    if (error) throw error;
-    else res.send(results);
-    //console.log(results);
-    // connected!
-});
-});
-
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
